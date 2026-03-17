@@ -93,12 +93,13 @@ footer {
   top: 30%;
   height: fit-content;
   padding: .5rem;
-  background-color: rgba(255 255 255 / 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .hero .overlay h3,
 .hero .overlay p {
   color: var(--accent-color);
+  padding: .2rem;
 }
 
 .hero .overlay a {
@@ -107,6 +108,8 @@ footer {
   border-radius: 5px;
   background-color: var(--accent-color);
   text-decoration: none;
+  color: var(--text-color);
+    text-align: center;
 }
 
 .section-container-grid {

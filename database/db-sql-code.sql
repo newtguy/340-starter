@@ -236,3 +236,17 @@ VALUES (
         'White',
         5
     );
+-- ASSIGNMENT 2 TASK 1 --
+-- Modify 'GM Hummer' record to read 'a huge interior' instead of 'small interiors'
+UPDATE public.inventory
+SET inv_description = REPLACE(
+        inv_description,
+        'small interiors',
+        'a huge interior'
+    )
+WHERE inv_make = 'GM'
+    AND inv_model = 'Hummer';
+-- Update all records in inventory table to add "/vehicles" to middle of file path
+UPDATE public.inventory
+SET inv_image = REPLACE(inv_image, 'images/', 'images/vehicles/'),
+    inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');

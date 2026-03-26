@@ -60,8 +60,12 @@ nav ul {
 }
 
 nav ul li {
-  color: var(--nav-text-color);
   list-style-type: none;
+  }
+  
+  nav ul li a {
+  color: var(--nav-text-color);
+  text-decoration: none;
   font-size: larger;
 }
 

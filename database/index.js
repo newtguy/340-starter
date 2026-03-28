@@ -7,21 +7,13 @@ require("dotenv").config()
  * If - else will make determination which to use
  * *************** */
 let pool
-
-if (process.env.NODE_ENV === "production") {
-  // Render (production) NEEDS SSL
+if (process.env.NODE_ENV == "development") {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
       rejectUnauthorized: false,
     },
-  })
-} else {
-  // Local development, no SSL
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  })
-}
+})
 
 // Added for troubleshooting queries
 // during development
@@ -36,4 +28,11 @@ module.exports = {
       throw error
     }
   },
+}
+} else {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  })
+  module.exports = pool
 }

@@ -1,0 +1,20 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else { %>
+  <% res.redirect('/') %>
+<% } %>
+
+<%# Optional messages block %>
+<%# messages() %>
+
+<section class="error-content">
+  <p><%= message %></p>
+
+  <% if (title == 404) { %>
+    <p>Oops! Looks like this page doesn’t exist.</p>
+  <% } else { %>
+    <p>Something went wrong on our end. Don’t worry, we’re on it!</p>
+  <% } %>
+
+  <p><a href="/">Return to Home</a></p>
+</section>

@@ -33,7 +33,7 @@ Util.buildClassificationGrid = async function(data){
     grid = '<ul id="inv-display">'
     data.forEach(vehicle => { 
       grid += '<li>'
-      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
+      grid +=  '<a href="/inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
       + 'details"><img src="' + vehicle.inv_thumbnail 
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
@@ -41,7 +41,7 @@ Util.buildClassificationGrid = async function(data){
       grid += '<div class="namePrice">'
       grid += '<hr />'
       grid += '<h2>'
-      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
+      grid += '<a href="/inv/detail/' + vehicle.inv_id +'" title="View ' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
       grid += '</h2>'
@@ -55,6 +55,27 @@ Util.buildClassificationGrid = async function(data){
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
+}
+
+/* ****************************************
+ * Build the vehicle detail view HTML
+ * ************************************** */
+Util.buildVehicleDetailHTML = function(vehicle) {
+  return `
+    <div class="vehicle-detail-container">
+      <div class="vehicle-image">
+        <img src="${vehicle.inv_image || '/images/no-image.png'}" 
+             alt="${vehicle.inv_make || 'Unknown'} ${vehicle.inv_model || ''}" />
+      </div>
+      <div class="vehicle-info">
+        <h1>${vehicle.inv_make || 'Unknown'} ${vehicle.inv_model || ''}</h1>
+        <p><strong>Year:</strong> ${vehicle.inv_year || 'N/A'}</p>
+        <p><strong>Price:</strong> $${Number(vehicle.inv_price || 0).toLocaleString()}</p>
+        <p><strong>Mileage:</strong> ${Number(vehicle.inv_miles || 0).toLocaleString()} miles</p>
+        <p>${vehicle.inv_description || 'No description available.'}</p>
+      </div>
+    </div>
+  `;
 }
 
 /* ****************************************

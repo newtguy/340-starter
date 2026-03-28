@@ -3,7 +3,6 @@ const utilities = require("../utilities/")
 
 const invCont = {}
 
-
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
@@ -18,6 +17,35 @@ invCont.buildByClassificationId = async function (req, res, next) {
     nav,
     grid,
   })
+}
+
+/* ***************************
+ *  Build single vehicle detail view
+ * ************************** */
+invCont.buildVehicleDetailView = async function (req, res, next) {
+  try {
+    const inv_id = req.params.inv_id;
+    const vehicleData = await invModel.getVehicleById(inv_id);
+    const nav = await utilities.getNav();
+    console.log(vehicleData);
+
+    if (!vehicleData) {
+      return res.status(404).render("errors/error", {
+        title: "Vehicle Not Found",
+        message: "The requested vehicle does not exist.",
+      });
+    }
+
+    const vehicleHTML = utilities.buildVehicleDetailHTML(vehicleData);
+
+    res.render("inventory/vehicle-detail", {
+      title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
+      vehicleHTML,
+      nav,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = invCont

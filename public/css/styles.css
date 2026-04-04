@@ -16,6 +16,8 @@
   --text-color: black;
   --primary-background-color: white;
   --accent-color: #8fb3cc;
+  --darker-accent-color: #3a5f7a;
+  --hover-accent-color: #2c485d;
   --nav-background-color: #2f2f2f;
   --nav-text-color: white;
 }
@@ -61,12 +63,16 @@ nav ul {
 
 nav ul li {
   list-style-type: none;
-  }
+}
   
-  nav ul li a {
+nav ul li a {
   color: var(--nav-text-color);
   text-decoration: none;
   font-size: larger;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
 }
 
 footer {
@@ -99,7 +105,7 @@ footer p {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 30%;
+  top: 40%;
   height: fit-content;
   padding: .5rem;
   background-color: rgba(0, 0, 0, 0.7);
@@ -189,7 +195,6 @@ footer p {
 .vehicle-detail-container {
   display: flex;
   flex-direction: column;
-  /* default stacked for small screens */
   gap: 1rem;
   border: 1px solid var(--accent-color);
   border-radius: 10px;
@@ -219,11 +224,117 @@ footer p {
 .vehicle-info p strong {
   color: var(--nav-background-color);
 }
+
+/* Flash Message */
+.notice {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 6px solid var(--accent-color);
+  border-radius: 8px;
+  background-color: #f4f8fb;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.error {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 6px solid #cc4444;
+  border-radius: 8px;
+  background-color: #fbeaea;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+/* Login & Registration page */
+.login-page, .registration-page {
+  margin: 2rem auto;
+  padding: 1rem;
+  max-width: 500px;
+  border: 1px solid var(--accent-color);
+  border-radius: 10px;
+  background-color: var(--primary-background-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.account-form, .registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;  
+}
+
+.account-form label, .registration-form label {
+  font-weight: bold;
+}
+
+.account-form input, .registration-form input {
+  padding: 0.5rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.account-form button, .registration-form button {
+  padding: 0.6rem;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.account-form button:hover, .registration-form button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Invalid input: left border red */
+.account-form input:invalid, .registration-form input:invalid {
+  border-left-width: 8px;
+  border-left-color: #cc4444;
+}
+
+/* Valid input: left border green */
+.account-form input:valid, .registration-form input:valid {
+  border-left-width: 8px;
+  border-left-color: #4caf50;
+}
+
+/* Focus effect */
+.account-form input:focus, .registration-form input:focus {
+  outline: none;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+}
+
+.register-link {
+  text-align: center;
+}
+
+.register-link a {
+  color: var(--darker-accent-color);
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  color: var(--hover-accent-color);
+  text-decoration: underline;
+}
+
 /* ID */
 
 #tools {
   flex: right;
 }
+
+#togglePassword {
+  background-color: var(--darker-accent-color);
+  margin-top: 0.5rem;
+}
+
+/* Media */
 
 @media screen and (min-width:600px) {
   body {
@@ -246,17 +357,17 @@ footer p {
     font-size: larger;
     padding: .7rem;
   }
-.vehicle-detail-container {
-  flex-direction: row;
-  align-items: flex-start;
-}
+  .vehicle-detail-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 
-.vehicle-image {
-  flex: 1;
-  margin-right: 2rem;
-}
+  .vehicle-image {
+    flex: 1;
+    margin-right: 2rem;
+  }
 
-.vehicle-info {
-  flex: 1;
-}
+  .vehicle-info {
+    flex: 1;
+  }
 }

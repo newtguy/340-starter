@@ -247,7 +247,7 @@ footer p {
 }
 
 /* Login & Registration page */
-.login-page, .registration-page {
+.login-page, .registration-page, .add-inventory-page {
   margin: 2rem auto;
   padding: 1rem;
   max-width: 500px;
@@ -259,24 +259,24 @@ footer p {
   gap: 1rem;
 }
 
-.account-form, .registration-form {
+form, .account-form, .registration-form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;  
 }
 
-.account-form label, .registration-form label {
+form label, .account-form label, .registration-form label {
   font-weight: bold;
 }
 
-.account-form input, .registration-form input {
+form input, .account-form input, .registration-form input {
   padding: 0.5rem;
   border: 1px solid var(--accent-color);
   border-radius: 5px;
   font-size: 1rem;
 }
 
-.account-form button, .registration-form button {
+form button, .account-form button, .registration-form button {
   padding: 0.6rem;
   background-color: var(--accent-color);
   color: var(--text-color);
@@ -285,26 +285,26 @@ footer p {
   cursor: pointer;
 }
 
-.account-form button:hover, .registration-form button:hover {
+form button:hover, .account-form button:hover, .registration-form button:hover {
   transform: scale(1.02);
   box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 /* Invalid input: left border red */
-.account-form input:invalid, .registration-form input:invalid {
+form input:invalid, .account-form input:invalid, .registration-form input:invalid {
   border-left-width: 8px;
   border-left-color: #cc4444;
 }
 
 /* Valid input: left border green */
-.account-form input:valid, .registration-form input:valid {
+form input:valid, .account-form input:valid, .registration-form input:valid {
   border-left-width: 8px;
   border-left-color: #4caf50;
 }
 
 /* Focus effect */
-.account-form input:focus, .registration-form input:focus {
+form input:focus, .account-form input:focus, .registration-form input:focus {
   outline: none;
   box-shadow: 0 0 3px rgba(0,0,0,0.2);
 }

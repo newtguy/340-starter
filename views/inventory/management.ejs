@@ -1,0 +1,17 @@
+<div class="management-page">
+  <% if (title) { %>
+    <h1><%= title %></h1>
+  <% } %>
+
+  <% messages() %>
+  <% if (message && message.length > 0) { %>
+  <script>
+    alert("<%= message %>");
+  </script>
+    <% } %>
+
+  <ul>
+    <li><a class="management-link" href="/inv/add-classification">Add New Classification</a></li>
+    <li><a class="management-link" href="/inv/add-inventory">Add New Inventory Item</a></li>
+  </ul>
+</div>

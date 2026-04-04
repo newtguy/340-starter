@@ -1,0 +1,20 @@
+<h1>Add Classification</h1>
+
+<p>Classification name cannot contain spaces or special characters.</p>
+
+<% if (message) { %>
+  <p class="notice"><%= message %></p>
+<% } %>
+
+<form method="post" action="/inv/add-classification">
+  <label for="classification_name">Classification Name</label>
+  <input
+    type="text"
+    name="classification_name"
+    id="classification_name"
+    required
+    pattern="[A-Za-z0-9]+"
+    value="<%= classification_name || '' %>">
+
+  <button type="submit">Add Classification</button>
+</form>

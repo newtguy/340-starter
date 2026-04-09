@@ -236,6 +236,13 @@ footer p {
   font-size: 0.95rem;
 }
 
+/* Success notice for updates */
+.notice.success {
+  border-left-color: #4caf50; 
+  background-color: #e6f4ea;  
+  color: #1f4620;             
+}
+
 .error {
   margin: 1rem 0;
   padding: 0.75rem 1rem;
@@ -247,7 +254,7 @@ footer p {
 }
 
 /* Login & Registration page */
-.login-page, .registration-page, .add-inventory-page {
+.login-page, .registration-page, .add-inventory-page, .update-inventory-page {
   margin: 2rem auto;
   padding: 1rem;
   max-width: 500px;
@@ -309,6 +316,43 @@ form input:focus, .account-form input:focus, .registration-form input:focus {
   box-shadow: 0 0 3px rgba(0,0,0,0.2);
 }
 
+/* Textarea styling (matches input fields) */
+form textarea,
+.account-form textarea,
+.registration-form textarea {
+  padding: 0.5rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: inherit;
+  min-height: 100px;
+  resize: vertical; /* allows vertical resize only */
+}
+
+/* Focus effect (same as inputs) */
+form textarea:focus,
+.account-form textarea:focus,
+.registration-form textarea:focus {
+  outline: none;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+}
+
+/* Invalid textarea (red left border) */
+form textarea:invalid,
+.account-form textarea:invalid,
+.registration-form textarea:invalid {
+  border-left-width: 8px;
+  border-left-color: #cc4444;
+}
+
+/* Valid textarea (green left border) */
+form textarea:valid,
+.account-form textarea:valid,
+.registration-form textarea:valid {
+  border-left-width: 8px;
+  border-left-color: #4caf50;
+}
+
 .register-link {
   text-align: center;
 }
@@ -323,15 +367,123 @@ form input:focus, .account-form input:focus, .registration-form input:focus {
   text-decoration: underline;
 }
 
+/* Inventory Management Page */
+
+.management-page {
+  margin-bottom: 1.5rem;
+}
+
+.management-page ul {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem;
+}
+
+.management-page li {
+  font-size: 1.2rem;
+  list-style-type: none;
+  padding: .4rem;
+}
+
+.management-link {
+  color: var(--darker-accent-color);
+  text-decoration: none;
+}
+
+.management-link:hover {
+  text-decoration: underline;
+  color: var(--hover-accent-color);
+}
+
 /* ID */
 
 #tools {
   flex: right;
 }
 
+#inv-display {
+  padding: 0.5rem;
+}
+
+#inv-display li {
+  list-style-type: none;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  max-width: 400px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
 #togglePassword {
   background-color: var(--darker-accent-color);
   margin-top: 0.5rem;
+}
+
+/* Dropdown (classification select) */
+#classificationList {
+  width: 100%;
+  margin: 0.75rem 0 1.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  background-color: var(--primary-background-color);
+  cursor: pointer;
+}
+
+#classificationList:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* Inventory Table */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Table Header */
+#inventoryDisplay thead {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+}
+
+#inventoryDisplay th {
+  padding: 0.75rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+/* Table Body */
+#inventoryDisplay td {
+  padding: 0.6rem;
+  border-top: 1px solid #ddd;
+}
+
+/* Zebra striping */
+#inventoryDisplay tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect */
+#inventoryDisplay tbody tr:hover {
+  background-color: #eef5fa;
+}
+
+/* Action links (Modify/Delete) */
+#inventoryDisplay a {
+  text-decoration: none;
+  color: var(--darker-accent-color);
+  font-weight: 500;
+}
+
+#inventoryDisplay a:hover {
+  color: var(--hover-accent-color);
+  text-decoration: underline;
 }
 
 /* Media */

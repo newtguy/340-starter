@@ -3,15 +3,23 @@
     <h1><%= title %></h1>
   <% } %>
 
-  <% messages() %>
   <% if (message && message.length > 0) { %>
-  <script>
-    alert("<%= message %>");
-  </script>
-    <% } %>
+    <% message.forEach(msg => { %>
+      <div class="notice success"><%= msg %></div>
+    <% }) %>
+  <% } %>
 
   <ul>
     <li><a class="management-link" href="/inv/add-classification">Add New Classification</a></li>
     <li><a class="management-link" href="/inv/add-inventory">Add New Inventory Item</a></li>
   </ul>
 </div>
+
+<h2>Manage Inventory</h2>
+<p>Select a classification from the list to see the corresponding items</p>
+<%- classificationSelect %>
+
+<table id="inventoryDisplay"></table>
+<noscript>Javascript must be enabled to use this page.</noscript>
+
+<script src="/js/inventory.js"></script>

@@ -36,17 +36,17 @@ app.use(
   }),
 )
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-app.use(cookieParser())
-app.use(utilities.checkJWTToken)
-
 // Express Messages Middleware
 app.use(require("connect-flash")())
 app.use(function (req, res, next) {
   res.locals.messages = require("express-messages")(req, res)
   next()
 })
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates
@@ -66,27 +66,32 @@ app.use("/inv", inventoryRoute)
 //Account route
 app.use("/account", accountRoute)
 //Intentional error route
-app.use("/err", errorRoute);
+app.use("/err", errorRoute)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
-  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+  next({ status: 404, message: "Sorry, we appear to have lost that page." })
 })
 
 /* ***********************
-* Express 404 Error Handler
-* Place after all other middleware
-*************************/
+ * Express 404 Error Handler
+ * Place after all other middleware
+ *************************/
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
-  let status = err.status || 500;
+  let status = err.status || 500
+  let message = ""
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if (err.status == 404) { message = err.message }
-  else if (err.status == 500) { message = err.message }
-  else { message = 'Oh no! There was a crash. Maybe try a different route?' }
+  if (err.status == 404) {
+    message = err.message
+  } else if (err.status == 500) {
+    message = err.message
+  } else {
+    message = "Oh no! There was a crash. Maybe try a different route?"
+  }
   res.render("errors/error", {
-    title: err.status || 'Server Error',
+    title: err.status || "Server Error",
     message,
-    nav
+    nav,
   })
 })
 

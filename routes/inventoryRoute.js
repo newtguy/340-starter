@@ -27,6 +27,12 @@ router.get(
   utilities.handleErrors(invController.buildAddInventory),
 )
 
+// Route to build Get Inventory
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
+// Route to build Edit Inventory
+router.get("/edit/:inventory_id", utilities.handleErrors(invController.buildEditInventory))
+
 // Process addClassification data
 router.post(
   "/add-classification",
@@ -42,5 +48,10 @@ router.post(
   invValidate.checkInventoryData, // validation error check
   utilities.handleErrors(invController.addInventory), // controller function
 )
+
+// Process update inventory data
+router.post("/update/",
+  invValidate.inventoryRules(),
+  utilities.handleErrors(invController.updateInventory))
 
 module.exports = router

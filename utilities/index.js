@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -25,33 +27,53 @@ Util.getNav = async function (req, res, next) {
 }
 
 /* **************************************
-* Build the classification view HTML
-* ************************************ */
-Util.buildClassificationGrid = async function(data){
+ * Build the classification view HTML
+ * ************************************ */
+Util.buildClassificationGrid = async function (data) {
   let grid
-  if(data.length > 0){
+  if (data.length > 0) {
     grid = '<ul id="inv-display">'
-    data.forEach(vehicle => { 
-      grid += '<li>'
-      grid +=  '<a href="/inv/detail/'+ vehicle.inv_id 
-      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-      + 'details"><img src="' + vehicle.inv_thumbnail 
-      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-      +' on CSE Motors" /></a>'
+    data.forEach((vehicle) => {
+      grid += "<li>"
+      grid +=
+        '<a href="/inv/detail/' +
+        vehicle.inv_id +
+        '" title="View ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        'details"><img src="' +
+        vehicle.inv_thumbnail +
+        '" alt="Image of ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        ' on CSE Motors" /></a>'
       grid += '<div class="namePrice">'
-      grid += '<hr />'
-      grid += '<h2>'
-      grid += '<a href="/inv/detail/' + vehicle.inv_id +'" title="View ' 
-      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
-      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
-      grid += '</h2>'
-      grid += '<span>$' 
-      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
-      grid += '</div>'
-      grid += '</li>'
+      grid += "<hr />"
+      grid += "<h2>"
+      grid +=
+        '<a href="/inv/detail/' +
+        vehicle.inv_id +
+        '" title="View ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        ' details">' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        "</a>"
+      grid += "</h2>"
+      grid +=
+        "<span>$" +
+        new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
+        "</span>"
+      grid += "</div>"
+      grid += "</li>"
     })
-    grid += '</ul>'
-  } else { 
+    grid += "</ul>"
+  } else {
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
@@ -60,22 +82,22 @@ Util.buildClassificationGrid = async function(data){
 /* ****************************************
  * Build the vehicle detail view HTML
  * ************************************** */
-Util.buildVehicleDetailHTML = function(vehicle) {
+Util.buildVehicleDetailHTML = function (vehicle) {
   return `
     <div class="vehicle-detail-container">
       <div class="vehicle-image">
-        <img src="${vehicle.inv_image || '/images/no-image.png'}" 
-             alt="${vehicle.inv_make || 'Unknown'} ${vehicle.inv_model || ''}" />
+        <img src="${vehicle.inv_image || "/images/no-image.png"}" 
+             alt="${vehicle.inv_make || "Unknown"} ${vehicle.inv_model || ""}" />
       </div>
       <div class="vehicle-info">
-        <h1>${vehicle.inv_make || 'Unknown'} ${vehicle.inv_model || ''}</h1>
-        <p><strong>Year:</strong> ${vehicle.inv_year || 'N/A'}</p>
+        <h1>${vehicle.inv_make || "Unknown"} ${vehicle.inv_model || ""}</h1>
+        <p><strong>Year:</strong> ${vehicle.inv_year || "N/A"}</p>
         <p><strong>Price:</strong> $${Number(vehicle.inv_price || 0).toLocaleString()}</p>
         <p><strong>Mileage:</strong> ${Number(vehicle.inv_miles || 0).toLocaleString()} miles</p>
-        <p>${vehicle.inv_description || 'No description available.'}</p>
+        <p>${vehicle.inv_description || "No description available."}</p>
       </div>
     </div>
-  `;
+  `
 }
 
 /* ****************************************
@@ -102,9 +124,46 @@ Util.buildClassificationList = async function (classification_id = null) {
 
 /* ****************************************
  * Middleware For Handling Errors
- * Wrap other function in this for 
+ * Wrap other function in this for
  * General Error Handling
  **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next) 
+Util.handleErrors = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next)
+
+/* ****************************************
+ * Middleware to check token validity
+ **************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in")
+          res.clearCookie("jwt")
+          return res.redirect("/account/login")
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        next()
+      },
+    )
+  } else {
+    next()
+  }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
 
 module.exports = Util

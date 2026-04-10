@@ -6,7 +6,7 @@ require("dotenv").config()
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
+Util.getNav = async function () {
   let data = await invModel.getClassifications()
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
@@ -140,7 +140,7 @@ Util.checkJWTToken = (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET,
       function (err, accountData) {
         if (err) {
-          req.flash("Please log in")
+          req.flash("notice", "Please log in")
           res.clearCookie("jwt")
           return res.redirect("/account/login")
         }
@@ -164,6 +164,25 @@ Util.checkLogin = (req, res, next) => {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
+}
+
+/* ****************************************
+ *  Check employee or admin
+ * ************************************ */
+Util.checkEmployeeOrAdmin = (req, res, next) => {
+  if (res.locals.loggedin && res.locals.accountData) {
+    const type = res.locals.accountData.account_type
+
+    if (type === "Employee" || type === "Admin") {
+      return next()
+    }
+
+    req.flash("notice", "You do not have permission to access that page.")
+    return res.redirect("/account/login")
+  }
+
+  req.flash("notice", "Please log in.")
+  return res.redirect("/account/login")
 }
 
 module.exports = Util

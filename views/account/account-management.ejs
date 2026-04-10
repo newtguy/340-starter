@@ -1,18 +1,46 @@
-<% if (title) { %>
+<div class="account-management">
+  <% if (title) { %>
     <h1><%= title %></h1>
-<% } else { %>
+  <% } else { %>
     <% res.redirect('/') %>
-<% } %>
-
-<!-- Flash Mssages -->
-<%- messages() %>
-
-<% if (errors) { %>
-  <ul class="notice">
-    <% errors.array().forEach(error => { %>
-      <li><%= error.msg %></li>
-    <%  }) %>
-  </ul>
-<% } %>
-
-<h1>Welcome, you're logged in.</h1>
+  <% } %>
+  
+  <!-- Flash Messages -->
+  <%- messages() %>
+  
+  <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+  
+  <% if (accountData) { %>
+  
+    <!-- Greeting -->
+    <h2>Welcome <%= accountData.account_firstname %></h2>
+  
+    <!-- Update account link (ALL users) -->
+    <p>
+      <a href="/account/update/<%= accountData.account_id %>">
+        Update Account Information
+      </a>
+    </p>
+  
+    <!-- Employee/Admin only section -->
+    <% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
+    
+      <h3>Inventory Management</h3>
+    
+      <p>
+        <a href="/inv/">
+          Go to Inventory Management
+        </a>
+      </p>
+    
+    <% } %>
+    
+  <% } %>
+    
+</div>

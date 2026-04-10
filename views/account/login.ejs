@@ -25,6 +25,9 @@
     <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
     <input type="password" id="account_password" name="account_password" required>
 
+    <!-- Toggle Password Visibility -->
+    <button type="button" id="togglePassword">Show Password</button>
+
     <button type="submit">Login</button>
   </form>
 
@@ -33,3 +36,15 @@
     Don't have an account? <a href="/account/register">Register here</a>
   </div>
 </div>
+
+<script>
+  // Toggle password visibility
+  const toggleBtn = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('account_password');
+
+  toggleBtn.addEventListener('click', () => {
+    const type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
+    toggleBtn.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
+  });
+</script>

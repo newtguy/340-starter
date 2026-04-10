@@ -1,0 +1,113 @@
+<div class="account-update">
+    <% if (title) { %>
+        <h1><%= title %></h1>
+    <% } else { %>
+        <% res.redirect('/') %>
+    <% } %>
+    
+    <!-- Flash Messages -->
+    <%- messages() %>
+    
+    <% if (errors) { %>
+        <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }) %>
+        </ul>
+    <% } %>
+
+    <% if (accountData) { %>
+
+    <!-- ========================= -->
+    <!-- ACCOUNT UPDATE FORM -->
+    <!-- ========================= -->
+    <h2>Account Update</h2>
+
+    <form method="post" action="/account/update">
+
+        <label for="account_firstname">First Name</label>
+        <input
+        type="text"
+        id="account_firstname"
+        name="account_firstname"
+        required
+        value="<%= accountData.account_firstname %>"
+        >
+
+        <label for="account_lastname">Last Name</label>
+        <input
+        type="text"
+        id="account_lastname"
+        name="account_lastname"
+        required
+        value="<%= accountData.account_lastname %>"
+        >
+
+        <label for="account_email">Email</label>
+        <input
+        type="email"
+        id="account_email"
+        name="account_email"
+        required
+        value="<%= accountData.account_email %>"
+        >
+
+        <!-- hidden id -->
+        <input
+        type="hidden"
+        name="account_id"
+        value="<%= accountData.account_id %>"
+        >
+
+        <button type="submit">Update Account</button>
+
+    </form>
+
+    <hr>
+
+    <!-- ========================= -->
+    <!-- CHANGE PASSWORD FORM -->
+    <!-- ========================= -->
+    <h2>Change Password</h2>
+
+    <form method="post" action="/account/update-password">
+
+        <label for="account_password">Password</label>
+        <span class="notice">Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
+        <input
+            type="password"
+            id="account_password"
+            name="account_password"
+            required
+            placeholder="12+ chars, 1 upper, 1 number, 1 special"
+            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+
+        <!-- hidden id -->
+        <input
+        type="hidden"
+        name="account_id"
+        value="<%= accountData.account_id %>"
+        >
+
+        <!-- Toggle Password Visibility -->
+        <button type="button" id="togglePassword">Show Password</button>
+
+        <button type="submit">Update Password</button>
+
+    </form>
+
+    <% } %>
+    
+</div>
+
+<script>
+  // Toggle password visibility
+  const toggleBtn = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('account_password');
+
+  toggleBtn.addEventListener('click', () => {
+    const type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
+    toggleBtn.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
+  });
+</script>

@@ -260,10 +260,10 @@ async function updatePassword(req, res) {
 
     req.flash("notice", "Password updated successfully")
 
-    return res.render("account/account-management", {
+    return res.render("account/", {
       title: "Account Management",
       nav,
-      accountData: updateAccount,
+      accountData: updatedAccount,
       errors: null,
     })
   } else {

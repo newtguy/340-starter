@@ -256,16 +256,8 @@ async function updatePassword(req, res) {
   const result = await accountModel.updatePassword(account_id, hashedPassword)
 
   if (result) {
-    const updatedAccount = await accountModel.getAccountById(account_id)
-
     req.flash("notice", "Password updated successfully")
-
-    return res.render("account/", {
-      title: "Account Management",
-      nav,
-      accountData: updatedAccount,
-      errors: null,
-    })
+    return res.redirect("/account/")
   } else {
     req.flash("notice", "Password update failed")
 

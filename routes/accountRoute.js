@@ -5,6 +5,7 @@ const accountController = require("../controllers/accountController")
 const utilities = require("../utilities/")
 const regValidate = require("../utilities/account-validation")
 const updateValidate = require("../utilities/account-update-validation")
+const recentController = require("../controllers/recentController")
 
 // Route to build account management view
 router.get(
@@ -22,10 +23,18 @@ router.get("/register", utilities.handleErrors(accountController.buildRegister))
 // Route to logout
 router.get("/logout", utilities.handleErrors(accountController.accountLogout))
 
+// Route to build update account view
 router.get(
   "/update/:account_id",
   utilities.checkLogin,
   utilities.handleErrors(accountController.buildUpdateAccount),
+)
+
+// Route to build recent view
+router.get(
+  "/recent",
+  utilities.checkLogin,
+  utilities.handleErrors(recentController.buildRecentView),
 )
 
 // Process the registration data

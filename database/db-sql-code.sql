@@ -35,6 +35,17 @@ CREATE TABLE IF NOT EXISTS public.account (
     account_type account_type NOT NULL DEFAULT 'Client'::account_type,
     CONSTRAINT account_pkey PRIMARY KEY (account_id)
 );
+-- Table structure for table `recent_view`---
+CREATE TABLE recent_view (
+  recent_id SERIAL PRIMARY KEY,
+  account_id INT REFERENCES account(account_id),
+  inv_id INT REFERENCES inventory(inv_id),
+  viewed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+-- Restrict new entries to unique vehicles---
+ALTER TABLE recent_view
+ADD CONSTRAINT unique_account_vehicle
+UNIQUE (account_id, inv_id);
 -- Add data --------------------
 -- Data for table 'classification'
 INSERT INTO public.classification (classification_name)

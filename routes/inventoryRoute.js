@@ -5,12 +5,17 @@ const invController = require("../controllers/invController")
 const utilities = require("../utilities") // index.js file grabbed by default
 const classValidate = require("../utilities/classification-validation")
 const invValidate = require("../utilities/inventory-validation")
+const recentController = require("../controllers/recentController")
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId)
 
-// Route to build vehicle detail view
-router.get("/detail/:inv_id", invController.buildVehicleDetailView)
+// Route to build vehicle detail view (add to recently viewed)
+router.get(
+  "/detail/:inv_id",
+  utilities.handleErrors(recentController.recordView),
+  invController.buildVehicleDetailView,
+)
 
 // Route to build management view
 router.get(

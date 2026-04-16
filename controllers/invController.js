@@ -35,7 +35,7 @@ invCont.buildVehicleDetailView = async function (req, res, next) {
     const inv_id = req.params.inv_id
     const vehicleData = await invModel.getVehicleById(inv_id)
     const nav = await utilities.getNav()
-    console.log(vehicleData)
+    // console.log(vehicleData)
 
     if (!vehicleData) {
       return res.status(404).render("errors/error", {

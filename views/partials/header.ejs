@@ -9,6 +9,10 @@
       <a class="welcome" href="/account">
         Welcome <%= accountData.account_firstname %>
       </a>
+
+      <% if (locals.loggedin) { %>
+        <a href="/account/recent">Recently Viewed</a>
+      <% } %>
      
       <!-- Logout link -->
       <a title="Click to log out" href="/account/logout">
